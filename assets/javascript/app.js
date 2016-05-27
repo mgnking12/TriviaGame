@@ -43,7 +43,13 @@ $(document).ready(function(){
 
     
 
-
+function answerChoices(){
+	$('#possAnswers').empty();
+	for (var i = 0; i < qa[ii].ans.length; i++){
+			$('#possAnswers').append("<button class='answer'>" + qa[ii].ans[i] + "</button><br>");
+  			attachEvents();
+	}
+}
 
 
 
@@ -57,10 +63,8 @@ var timez = {
         counter = setInterval(timez.count, 1000);
         setTimeout(halfTime, 1000 * 16);
         setTimeout(timeUp, 1000 * 31);
-        	$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	$('#possAnswers').html("<button id='answer'>" + qa[ii].ans[0] + "</button><br><button id='answer'>" + qa[ii].ans[1] + "</button><br><button id='answer'>" + qa[ii].ans[2] + "</button><br><button id='answer'>" + qa[ii].ans[3] + "</button><br>");
-  			attachEvents();
-
+        $('#question').html("<h3>" + qa[ii].ques + "</h3>");
+        answerChoices();
 		
     },
     
@@ -69,7 +73,6 @@ var timez = {
         //increment time by 1, remember we cant use "this" here
       timez.time--;
         var timeCD = timez.time;
-        //Use the variable you just created to show the converted time in the "display" div
         $("#displayCD").html(timeCD);
     },
     
@@ -87,11 +90,13 @@ var timez = {
 	//reset
 	function timeUp(){
         clearInterval(counter);
+        timez.time = 31;
+        timez.start;
         $("#displayCD").html("");
         alert("Times up!");
         ii++;
 			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	$('#possAnswers').html("<button id='answer'>" + qa[ii].ans[0] + "</button><br><button id='answer'>" + qa[ii].ans[1] + "</button><br><button id='answer'>" + qa[ii].ans[2] + "</button><br><button id='answer'>" + qa[ii].ans[3] + "</button><br>");
+        	answerChoices();
   			attachEvents();
 	};
 
@@ -99,19 +104,34 @@ var timez = {
 
 $('#startGame').click(timez.start);
 function attachEvents(){
-$('#answer').on("click", function answerClick(){
-		if (qa[ii].correctanswer === true){
+$('.answer').on("click", function answerClick(){
+	console.log(this);
+    var el = $(this);
+    var yy = el.text();
+    console.log(yy);
+    console.log(qa[ii].correctanswer)
+		if (qa[ii].correctanswer === yy){
 			alert("Good Job! Next Question!")
+			$('#question').empty();
 			ii++;
 			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	$('#possAnswers').html("<button id='answer'>" + qa[ii].ans[0] + "</button><br><button id='answer'>" + qa[ii].ans[1] + "</button><br><button id='answer'>" + qa[ii].ans[2] + "</button><br><button id='answer'>" + qa[ii].ans[3] + "</button><br>");
-  			attachEvents();
+        	answerChoices();
+        	clearInterval(counter);
+	        timez.time = 31;
+	        timez.start;
+	        $("#displayCD").html("");
+  			//attachEvents();
   		}else{
   			alert("Wrong! Next Question!");
+  			$('#question').empty();
   			ii++;
 			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	$('#possAnswers').html("<button id='answer'>" + qa[ii].ans[0] + "</button><br><button id='answer'>" + qa[ii].ans[1] + "</button><br><button id='answer'>" + qa[ii].ans[2] + "</button><br><button id='answer'>" + qa[ii].ans[3] + "</button><br>");
-  			attachEvents();
+        	answerChoices();
+        	clearInterval(counter);
+	        timez.time = 31;
+	        timez.start;
+	        $("#displayCD").html("");
+  			//attachEvents();
   		 }
 	});
 
@@ -126,7 +146,7 @@ $('#answer').on("click", function answerClick(){
 
 
 
-
+//fruits.indexOf("Apple")
 
 
 
