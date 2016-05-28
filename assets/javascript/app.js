@@ -99,9 +99,12 @@ var timez = {
 
         counter = setInterval(timez.count, 1000);
         //timeoutHandle = setTimeout(timeUp, 1000 * 31);
+        if (qa[ii] === qa[6]) {
+  				timez.reset();
+  			}else{
         $('#question').html("<h3>" + qa[ii].ques + "</h3>");
         answerChoices();
-        attachEvents();
+        attachEvents();}
 		//if (timez.time === 0)
     },
     stop: function(){
@@ -121,10 +124,12 @@ var timez = {
         	alert("Times up!");
         }
 
+
     },
     
     reset: function(){
 		timez.stop();
+		ii = 0;
         //timez.time = 31;
         $("#displayCD").html("");
         alert("Game Over!");
