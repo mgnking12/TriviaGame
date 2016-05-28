@@ -86,6 +86,8 @@ function answerChoices(){
 }
 
 
+//setTimeout(halfTime, 1000 * 16);
+
 
 var timez = {
     time: 31,
@@ -94,16 +96,17 @@ var timez = {
         //Use setInterval to start the count here
         timez.time = 31;
         $('#startGame').empty();
+
         counter = setInterval(timez.count, 1000);
-        setTimeout(halfTime, 1000 * 16);
-        setTimeout(timez.timeUp, 1000 * 31);
+        //timeoutHandle = setTimeout(timeUp, 1000 * 31);
         $('#question').html("<h3>" + qa[ii].ques + "</h3>");
         answerChoices();
         attachEvents();
-		
+		//if (timez.time === 0)
     },
     stop: function(){
         	clearInterval(counter);
+        	//clearTimeout(timeoutHandle);
     	},
     
     count: function(){
@@ -111,39 +114,41 @@ var timez = {
       timez.time--;
         var timeCD = timez.time;
         $("#displayCD").html(timeCD);
+        if (timez.time === 0){
+        	ii++
+        	timez.stop(); 
+        	timez.start();
+        	alert("Times up!");
+        }
+
     },
     
     reset: function(){
 		timez.stop();
-        timez.time = 31;
-        timez.start;
+        //timez.time = 31;
         $("#displayCD").html("");
-        alert("Times up!");
+        alert("Game Over!");
         $('#startGame').html("<button class='center-block'>Press to start the game</button>");
 			$('#question').empty();
         	$('#possAnswers').empty();
 
   			//attachEvents();
 	},
-	timeUp: function(){
-        timez.time = 31;
-        alert("Times up!");
-        console.log(timez.start);
-        ii++;
-			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	answerChoices();
-	},
+	
 };
-	function timeLeftX(){
-		$('#time-left').html("");
+
+    
+	function eX(){
+		$('#photo').html("");
+
 	}
 
-	function halfTime(){
+	/*function halfTime(){
 		$('#time-left').html("<h3>About 15 seconds left</h3>");
 		setTimeout(timeLeftX, 3000);
-	}
+	}*/
 	
-	function reset(){
+	/*function reset(){
 		timez.stop();
         timez.time = 31;
         $("#displayCD").html("");
@@ -151,10 +156,9 @@ var timez = {
         $('#startGame').css("display", "initial");
 			$('#question').empty();
         	$('#possAnswers').empty();
-	};
+	};*/
 
 	
-
 
 $('#startGame').click(timez.start);
 
@@ -169,7 +173,10 @@ $('.answer').on("click", function answerClick(){
     console.log(yy);
     var buttonClick = parseInt(el.attr('value'));
 		if (buttonClick === qa[ii].correctanswer){
-			alert("Good Job! Next Question!");
+			right++;
+			$("#displayCD").html("Good Job! Next Question!");
+			$("#photo").html("<img src='http://media2.giphy.com/media/c5PHIq9sXsV6o/giphy.gif' />");
+			setTimeout(eX, 1000);
 			ii++;
         	timez.stop();
 	        timez.start();
@@ -177,8 +184,11 @@ $('.answer').on("click", function answerClick(){
   				timez.reset();
   			}else{}
   		}else{
-  			alert("Wrong! Next Question!");
+  			wrong++;
   			ii++;
+  			$("#displayCD").html("Wrong! Next Question!");
+  			$("#photo").html("<img src='http://25.media.tumblr.com/29bfc79b2e4a501a2f7ee3bfbd1dcf0e/tumblr_mf4y1jGtCd1rkiy6bo1_500.gif' />");
+  			setTimeout(eX, 1000)
         	timez.stop();
 	        timez.start();
   			if (qa[ii] === qa[6]) {
