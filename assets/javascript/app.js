@@ -1,34 +1,36 @@
 var ques = "";
 var ans = [];
 var ii = 0;
+var wrong = 0;
+var right = 0;
 var qa =[{
 		ques: "In 'A Glitch is a Glitch', who releases the computer virus, even though they didn't create it?",
 		ans: ["Beemo","Finn and Jake","Ice King","Marceline"],
-		correctanswer: ans[1],
+		correctanswer: 1,
 	},{
 		ques: "How did Jake obtain his powers?",
 		ans: ["Mud Puddle","Sandwiches","A Wizzard","Inherited By His Parents"],
-		correctanswer: ans[0],
+		correctanswer: 0,
 	},{
 		ques: "Who was the original Goblin King?",
 		ans: ["Ice King","Xergiok","Marceline's Dad","Lemongrab"],
-		correctanswer: ans[1],
+		correctanswer: 1,
 	},{
 		ques: "What was Finn's original name?",
 		ans: ["Earl","Buddy","Pen","Bob"],
-		correctanswer: ans[2],
+		correctanswer: 2,
 	},{
 		ques: "What is the animal that can be seen somewhere in every episode?",
 		ans: ["Lion","Pig","Bat","Snail"],
-		correctanswer: ans[3],
+		correctanswer: 3,
 	},{
 		ques: "Marceline is not a traditional vampire. What does she primarily eat?",
 		ans: ["Fruit, like a fruit bat","Pizza, with extra red sauce","Books about violence","The color shade red"],
-		correctanswer: ans[3],
+		correctanswer: 3,
 	},{
 		ques: "Which of the following is NOT a princess?",
 		ans: ["Princess Bubblegum", "Flame Princess", "Ice Princess", "Marceline Abadeer"],
-		correctanswer: ans[2],
+		correctanswer: 2,
 	}
 	];
 
@@ -78,7 +80,7 @@ $(document).ready(function(){
 function answerChoices(){
 	$('#possAnswers').empty();
 	for (var i = 0; i < qa[ii].ans.length; i++){
-			$('#possAnswers').append("<button class='answer'>" + qa[ii].ans[i] + "</button><br>");
+			$('#possAnswers').append("<button class='answer' value='"+[i]+"'>" + qa[ii].ans[i] + "</button><br>");
   			
 	}
 }
@@ -90,7 +92,7 @@ var timez = {
     
     start: function(){
         //Use setInterval to start the count here
-
+        timez.time = 31;
         $('#startGame').empty();
         counter = setInterval(timez.count, 1000);
         setTimeout(halfTime, 1000 * 16);
@@ -124,16 +126,12 @@ var timez = {
   			//attachEvents();
 	},
 	timeUp: function(){
-        //timez.stop();
         timez.time = 31;
-        //$("#displayCD").html("");
         alert("Times up!");
         console.log(timez.start);
         ii++;
 			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
         	answerChoices();
-        //timez.start();
-  			//attachEvents();
 	},
 };
 	function timeLeftX(){
@@ -153,23 +151,14 @@ var timez = {
         $('#startGame').css("display", "initial");
 			$('#question').empty();
         	$('#possAnswers').empty();
-
-  			//attachEvents();
 	};
 
 	
 
-	//attachEvents();
 
 $('#startGame').click(timez.start);
 
-/*function attachEvents(){
-	$('.answer').on("click", function answerClick(){
-	//console.log(this);
-    var el = $(this);
-    var yy = el.text();
-    console.log(yy);
-})}*/
+
 
 
 function attachEvents(){
@@ -178,32 +167,20 @@ $('.answer').on("click", function answerClick(){
     var el = $(this);
     var yy = el.text();
     console.log(yy);
-    console.log(qa[ii].correctanswer)
-		if (qa[ii].correctanswer[ii].text() === yy){
-			alert("Good Job! Next Question!")
-			//$('#question').empty();
+    var buttonClick = parseInt(el.attr('value'));
+		if (buttonClick === qa[ii].correctanswer){
+			alert("Good Job! Next Question!");
 			ii++;
-			//$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	//answerChoices();
         	timez.stop();
-	        //timez.time = 31;
 	        timez.start();
-	        //$("#displayCD").html("");
-  			//attachEvents();
   			if (qa[ii] === qa[6]) {
   				timez.reset();
   			}else{}
   		}else{
   			alert("Wrong! Next Question!");
-  			//$('#question').empty();
   			ii++;
-			//$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	//answerChoices();
         	timez.stop();
-	        //timez.time = 31;
-	        timez.start;
-	        //$("#displayCD").html("");
-  			//attachEvents();
+	        timez.start();
   			if (qa[ii] === qa[6]) {
   				timez.reset();
   			}else{}
@@ -217,11 +194,6 @@ $('.answer').on("click", function answerClick(){
 
 
 
-
-
-
-
-//fruits.indexOf("Apple")
 
 
 
