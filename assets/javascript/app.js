@@ -79,7 +79,7 @@ function answerChoices(){
 	$('#possAnswers').empty();
 	for (var i = 0; i < qa[ii].ans.length; i++){
 			$('#possAnswers').append("<button class='answer'>" + qa[ii].ans[i] + "</button><br>");
-  			attachEvents();
+  			
 	}
 }
 
@@ -97,6 +97,7 @@ var timez = {
         setTimeout(timez.timeUp, 1000 * 31);
         $('#question').html("<h3>" + qa[ii].ques + "</h3>");
         answerChoices();
+        attachEvents();
 		
     },
     stop: function(){
@@ -131,6 +132,7 @@ var timez = {
         ii++;
 			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
         	answerChoices();
+        //timez.start();
   			//attachEvents();
 	},
 };
@@ -160,6 +162,16 @@ var timez = {
 	//attachEvents();
 
 $('#startGame').click(timez.start);
+
+/*function attachEvents(){
+	$('.answer').on("click", function answerClick(){
+	//console.log(this);
+    var el = $(this);
+    var yy = el.text();
+    console.log(yy);
+})}*/
+
+
 function attachEvents(){
 $('.answer').on("click", function answerClick(){
 	console.log(this);
@@ -167,7 +179,7 @@ $('.answer').on("click", function answerClick(){
     var yy = el.text();
     console.log(yy);
     console.log(qa[ii].correctanswer)
-		if (qa[ii].correctanswer === yy){
+		if (qa[ii].correctanswer[ii].text() === yy){
 			alert("Good Job! Next Question!")
 			//$('#question').empty();
 			ii++;
@@ -196,12 +208,12 @@ $('.answer').on("click", function answerClick(){
   				timez.reset();
   			}else{}
   		 }
-	});
+	})};
 
 
 
 
-}});
+});
 
 
 
