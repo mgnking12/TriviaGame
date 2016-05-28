@@ -34,6 +34,38 @@ var qa =[{
 
 
 
+/*var questionTimer = {
+		time: 30,
+
+		reset: function () {
+        	questionTimer.time = 30;
+    	},
+   		start: function(){
+   			$('#time').html("Time Remaining: " + questionTimer.time);
+        	counter = setInterval(questionTimer.count, 1000);
+    	},
+    	stop: function(){
+        	clearInterval(counter);
+    	},
+    	count: function(){
+   	        questionTimer.time--;
+	        $('#time').html("Time Remaining: " + questionTimer.time);
+
+	        if(questionTimer.time == 0) {
+	        	questionTimer.stop();
+	        }
+    	},
+	}
+
+*/
+
+
+
+
+
+
+
+
     
 $(document).ready(function(){
 
@@ -59,15 +91,17 @@ var timez = {
     start: function(){
         //Use setInterval to start the count here
 
-        $('#startGame').css('display', 'none');
+        $('#startGame').empty();
         counter = setInterval(timez.count, 1000);
         setTimeout(halfTime, 1000 * 16);
-        setTimeout(timeUp, 1000 * 31);
+        setTimeout(timez.timeUp, 1000 * 31);
         $('#question').html("<h3>" + qa[ii].ques + "</h3>");
         answerChoices();
 		
     },
-    
+    stop: function(){
+        	clearInterval(counter);
+    	},
     
     count: function(){
         //increment time by 1, remember we cant use "this" here
@@ -76,6 +110,29 @@ var timez = {
         $("#displayCD").html(timeCD);
     },
     
+    reset: function(){
+		timez.stop();
+        timez.time = 31;
+        timez.start;
+        $("#displayCD").html("");
+        alert("Times up!");
+        $('#startGame').html("<button class='center-block'>Press to start the game</button>");
+			$('#question').empty();
+        	$('#possAnswers').empty();
+
+  			//attachEvents();
+	},
+	timeUp: function(){
+        //timez.stop();
+        timez.time = 31;
+        //$("#displayCD").html("");
+        alert("Times up!");
+        console.log(timez.start);
+        ii++;
+			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
+        	answerChoices();
+  			//attachEvents();
+	},
 };
 	function timeLeftX(){
 		$('#time-left').html("");
@@ -86,21 +143,21 @@ var timez = {
 		setTimeout(timeLeftX, 3000);
 	}
 	
-
-	//reset
-	function timeUp(){
-        clearInterval(counter);
+	function reset(){
+		timez.stop();
         timez.time = 31;
-        timez.start;
         $("#displayCD").html("");
         alert("Times up!");
-        ii++;
-			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	answerChoices();
-  			attachEvents();
+        $('#startGame').css("display", "initial");
+			$('#question').empty();
+        	$('#possAnswers').empty();
+
+  			//attachEvents();
 	};
 
-	attachEvents();
+	
+
+	//attachEvents();
 
 $('#startGame').click(timez.start);
 function attachEvents(){
@@ -112,26 +169,32 @@ $('.answer').on("click", function answerClick(){
     console.log(qa[ii].correctanswer)
 		if (qa[ii].correctanswer === yy){
 			alert("Good Job! Next Question!")
-			$('#question').empty();
+			//$('#question').empty();
 			ii++;
-			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	answerChoices();
-        	clearInterval(counter);
-	        timez.time = 31;
-	        timez.start;
-	        $("#displayCD").html("");
+			//$('#question').html("<h3>" + qa[ii].ques + "</h3>");
+        	//answerChoices();
+        	timez.stop();
+	        //timez.time = 31;
+	        timez.start();
+	        //$("#displayCD").html("");
   			//attachEvents();
+  			if (qa[ii] === qa[6]) {
+  				timez.reset();
+  			}else{}
   		}else{
   			alert("Wrong! Next Question!");
-  			$('#question').empty();
+  			//$('#question').empty();
   			ii++;
-			$('#question').html("<h3>" + qa[ii].ques + "</h3>");
-        	answerChoices();
-        	clearInterval(counter);
-	        timez.time = 31;
+			//$('#question').html("<h3>" + qa[ii].ques + "</h3>");
+        	//answerChoices();
+        	timez.stop();
+	        //timez.time = 31;
 	        timez.start;
-	        $("#displayCD").html("");
+	        //$("#displayCD").html("");
   			//attachEvents();
+  			if (qa[ii] === qa[6]) {
+  				timez.reset();
+  			}else{}
   		 }
 	});
 
